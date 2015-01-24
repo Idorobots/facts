@@ -1,0 +1,55 @@
+# ###############################################################################
+#+TITLE: *Wykorzystanie ontologii w językach programowania do programowania rozproszonego.*
+#+AUTHOR: Kajetan Rzepecki
+#+DATE: \small{EIS 2014} \\* \\* \today
+#
+#+LaTeX_CLASS: article
+#+LaTeX_CLASS_OPTIONS: [12pt, a4paper]
+#+LaTeX_HEADER: \usepackage[margin=2cm]{geometry}
+#+LaTeX_HEADER: \usepackage{minted}
+#+LaTeX_HEADER: \usepackage [polish]{babel}
+#+OPTIONS: tags:nil toc:nil
+# ###################
+
+#+latex: \thispagestyle{empty}
+#+latex: \vfill \vfill \vfill
+#+latex: \pagebreak
+
+* Wstęp
+- Opis projektu
+- Opis języka
+- Opis potrzeby wykrywania dostępnych usług
+
+* Analiza problemu
+** Wykorzystanie wiedzy w języku
+- Opis systemu modułowego
+- Automatyczne semantyczne adnotacje definicji
+- Problem do rozwiązania - przechowywanie i udostępnianie wiedzy o modułach
+- Generalizacja problemu do dowolnych faktów
+** Podobne rozwiązania
+- Przegląd obecnych metod SOA
+- Call by Meaning
+
+* Szkic rozwiązania
+** Porównanie różnych podejść
+- Predefiniowane formaty opisu usług (np. WSDL)
+- Systemy Regułowe - problem późnego startu/restartu usług
+- Ontologie/bazy faktów
+** Podejście semantyczne
+- Wstępny plan ontologii
+- Lista pojęć i zależności między nimi
+
+* Prototyp rozwiązania
+[[https://github.com/Idorobots/facts][Link do repozytorium na GitHub.]]
+
+** Ontologia Systemu Modułowego
+
+** Przykłady wykorzystania ontologii
+- Automatyczna inferencja dostępnej klasy obiektów
+- Zapytania SPARQL
+
+* Analiza proponowanego rozwiązania
+** Wnioski
+
+* Bibliografia
+- Hesam Samimi, Chris Deaton, Yoshiki Ohshima, Alessandro Warth, and Todd Millstein, /Call by Meaning/, In Proceedings of the 2014 ACM International Symposium on New Ideas, New Paradigms, and Reflections on Programming & Software (Onward! 2014), ACM, New York, NY, USA, 11-28, http://doi.acm.org/10.1145/2661136.266115
