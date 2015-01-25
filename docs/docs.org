@@ -16,9 +16,11 @@
 #+latex: \pagebreak
 
 * Wstęp
-- Opis projektu
-- Opis języka
-- Opis potrzeby wykrywania dostępnych usług
+Celem projektu jest zbadanie możliwości oraz opłacalności wykorzystania ontologii w celu reprezentacji wiedzy w języku programowania przeznaczonego do programowania rozproszonego, zorientowanego zdarzeniowo.
+
+Projektowany język ma umożliwiać łatwe rozproszenie aplikacji na wiele heterogenicznych maszyn cechujących się różnymi architekturami, dostępnymi peryferiami sprzętowymi oraz aplikacjami. Dodatkowo dużą wagę będzie przywiązywał do asynchronicznej obsługi zdarzeń zachodzących w systemie - wykorzystany zostanie mechanizm obsługi zdarzeń (Complex Event Processing, CEP) bazujący na Systemach Regułowych (RBS).
+
+W celu ułatwienia pracy w tak zróżnicowanym środowisku niezbędna będzie jego semantyzacja i udostępnienie odkrytej wiedzy w przystępny sposób. Dodatkowym wymogiem jest łatwa integracja z obecnym w języku mechanizmem obsługi zdarzeń, uzupełnienie jego funkcjonalności i umożliwienie nie tylko reagowania na pojawienie się nowej wiedzy o systemie, ale również refleksji nad dotychczas odkrytą wiedzą.
 
 * Analiza problemu
 ** Wykorzystanie wiedzy w języku
