@@ -23,14 +23,110 @@ Projektowany język ma umożliwiać łatwe rozproszenie aplikacji na wiele heter
 W celu ułatwienia pracy w tak zróżnicowanym środowisku niezbędna będzie jego semantyzacja i udostępnienie odkrytej wiedzy w przystępny sposób. Dodatkowym wymogiem jest łatwa integracja z obecnym w języku mechanizmem obsługi zdarzeń, uzupełnienie jego funkcjonalności i umożliwienie nie tylko reagowania na pojawienie się nowej wiedzy o systemie, ale również refleksji nad dotychczas odkrytą wiedzą.
 
 * Analiza problemu
+Projektowany język zostanie wyposażony w system modułowy, którego zadaniem będzie abstrakcja pewnych funkcjonalności dostępnych na danej platformie sprzętowej bądź programowej, składający się z kilku kluczowych elementów przedstawionych na poniższym diagramie wraz z głównymi relacjami w jakich występują:
+
+#+BEGIN_CENTER
+#+attr_latex: :width 0.6\textwidth
+[[file:./img/ms.pdf]]
+#+END_CENTER
+
+#+LaTeX: \noindent
+Elementy te pełnią następujące funkcje:
+
+- *protokoły* - zapewniają interfejs oraz kontrakty (typy, testy, pre/post-conditions), są przechodnie (wszystko co definiuje odpowiedni interfejs jednocześnie implementuje protokół),
+- *moduły* - zapewniają konkretną implementację protokołów (definicje funkcji, dodatkowe kontrakty i testy),
+- *funkcje* - stanowią najmniejsze bloki budulcowe programów,
+- *procesy* - stanowią kontekst uruchomieniowy jednego z wielu wątków programu (powiązane bloki pamięci, kolejkę asynchronicznie odebranych wiadomości, kontynuacje aktualnie uruchamianej funkcji oraz inne metadane),
+- *jednostki* - wiążą statyczne moduły z dynamicznymi procesami zapewniając stan pomiędzy wywołaniami funkcji pewnego protokołu.
+
+Głównymi zadaniami powyższego systemu modułowego jest zapewnienie dystrybucji i redundancji dostępnych funkcjonalności oraz ułatwienie tworzenia dynamicznych aplikacji:
+
+- *dystrybucja* - odwołania do procesów wykorzystują dodatkowy poziom pośredni w postaci *identyfikatora procesu*, dzięki czemu możliwe jest odwoływanie się do procesów działających na innej maszynie,
+- *redundancja* - w jednej chwili w systemie (tj. na różnych maszynach połączonych w klaster) może istnieć wiele modułów implementujących te same protokoły na różne sposoby,
+- *dynamizm* - aplikacje zbudowane będą z jednostek, które w dowolnej chwili mogą być uruchamiane, zatrzymywane lub przenoszone na inne maszyny.
+
+#+LaTeX: \noindent
+Dystrybucja, redundancja i dynamizm tworzą potrzebę rozróżniania dostępnych funkcjonalności nie tylko po ich nazwach lub interfejsach, jak ma to miejsce w większości obecnie stosowanych języków programowania, ale także po innych, arbitralnych i zależnych od konkretnej funkcjonalności cechach, takich jak złożoność obliczeniowa jej implementacji, dokładność odczytu danych sensorycznych, czy obciążenie sieci, w której działa jedna z maszyn podłączonych do klastra.
+
+** Przykład zastosowania systemu modułowego
+Poniżej przedstawiono prosty przykład zastosowania opisanego powyżej systemu modułowego. Przykład definiuje prosty protokół =gps= pozwalający na pobieranie aktualnej lokacji (funkcja =get-location=) z maksymalną dozwoloną tolerancją (=tolerance=):
+
+#+BEGIN_SRC scheme
+(define-protocol gps
+  (declare (get-location pid)
+    (@ tolerance 0.01)))
+#+END_SRC
+
+#+LaTeX: \noindent
+...oraz dwie jednostki =basic-gps= oraz =vendor-gps= go implementujące:
+
+#+BEGIN_SRC scheme
+(define-module (basic-gps)
+  (provide gps)
+  (provide unit)
+
+  ;; Unit specific
+  (define (start _) nil)
+
+  (define (stop reason) 'ok)
+
+  (define (loop curr-location)
+    (loop
+     (receive
+         (`(get-location ,from) (send! from curr-location))
+         (after 1000 (update-location)))))
+
+  ;; GPS specific
+  (define (get-location pid)
+    (send! `(get-location (self)))
+    (receive))
+
+  (define (update-location)
+    ;; read & return GPS location
+    ))
+#+END_SRC
+
+#+LaTeX: \noindent
+...które różnią się jedynie toleracją funkcji odpowiedzialnej za odczyt danych sensorycznych:
+
+#+BEGIN_SRC scheme
+(define-module (vendor-gps)
+  (provide gps)
+  (provide unit)
+
+  ;; ... details same as basic-gps
+
+  (declare (get-location pid)
+    (@ tolerance 0.0001))
+
+  (define (update-location)
+    ;; read & return better GPS location
+    ))
+#+END_SRC
+
+#+LaTeX: \noindent
+Przykładowy scenariusz wykorzystania powyższych jednostek mógłby przebiegać następująco:
+
+- Maszyna =N= posiada wiedzę o działających jednostkach w pozostałych maszynach podłączonych do klastra.
+- Na maszynie =N= startuje nowa jednostka =U= wymagająca funkcji lokalizacyjnej.
+- Jednostka =U= odkrywa wiedzę o istnieniu dwóch jednostek dostarczających funkcje lokalizacji: =basic-gps= oraz =vendor-gps=, z których =vendor-gps= działa na zdalnej maszynie.
+- Jednostka =U= rozstrzyga o wyborze odpowiedniej jednostki na podstawie =tolerance= dostarczanych funkcji lokalizacji oraz fizycznych lokacji jednostek, wybieracjąc =vendor-gps=.
+- Jednostka =U= deklaruje regułę, iż w przypadku zatrzymania =vendor-gps= powinna się przełączyć na =basic-gps=.
+- Maszyna =P=, na której działa =vendor-gps= ginie w pożarze domu starców.
+- Maszyna =N= nie otrzymawszy odpowiedzi od maszyny =P= na pakiet /heartbeat/ uznaje ją za niefunkcjonalną i inwaliduje całą wiedzę z nią związaną.
+- Jednostka =U= otrzymawszy informację o dezintegracji =vendor-gps= automatycznie przełącza się na =basic-gps=.
+- System działa długo i szczęśliwie.
+
 ** Wykorzystanie wiedzy w języku
-- Opis systemu modułowego
-- Automatyczne semantyczne adnotacje definicji
-- Problem do rozwiązania - przechowywanie i udostępnianie wiedzy o modułach
-- Generalizacja problemu do dowolnych faktów
+- Automatyczne semantyczne adnotacje
+- CEP przez RBS
+- Problem do rozwiązania - generowanie, przechowywanie i udostępnianie wiedzy o systemie
+- Generalizacja RBS do bazy faktów
+- Query bazy faktów w celu znalezienia usług
+
 ** Podobne rozwiązania
-- Przegląd obecnych metod SOA
-- Call by Meaning
+- Przegląd obecnych metod SOA - statyczne formaty definicji usług, brak elastyczności w odkrywaniu usług,
+- Call by Meaning - nieadekwatna wydajność.
 
 * Szkic rozwiązania
 ** Porównanie różnych podejść
