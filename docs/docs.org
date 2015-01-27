@@ -118,11 +118,39 @@ Przykładowy scenariusz wykorzystania powyższych jednostek mógłby przebiegać
 - System działa długo i szczęśliwie.
 
 ** Wykorzystanie wiedzy w języku
-- Automatyczne semantyczne adnotacje
-- CEP przez RBS
-- Problem do rozwiązania - generowanie, przechowywanie i udostępnianie wiedzy o systemie
-- Generalizacja RBS do bazy faktów
-- Query bazy faktów w celu znalezienia usług
+Projektowany język programowania będzie posiadał zintegrowany mechanizm obsługi zdarzeń, zaimplementowany jako system regułowy, korzystający z bazy faktów reprezentujących wiedzę o działającej aplikacji.
+
+Faktem może być dowolna =n=-krotka przynajmniej dwóch wartości, która zostaje dodana do systemu przez procedurę =assert!= (stała asercja), lub =signal!= (tymczasowa sygnalizacja):
+
+#+BEGIN_EXAMPLE
+(predicate subject object-a object-b ...)
+(is-a X unit)
+(provides X unit-protocol)
+(unit-started X)
+#+END_EXAMPLE
+
+#+LaTeX: \noindent
+Fakty te mogą reprezentować strukturę dostępnych modułów, jednostek lub protokołów, a także zachodzenie pewnych zdarzeń, takich jak wystartowanie jednostki, załadowanie modułu, lub podłączenie nowej maszyny do klastra.
+
+Aby wykorzystać tak odkrywaną wiedzę o strukturze i działaniu aplikacji należy zdefiniować reguły za pomocą konstrukcji =whenever=:
+
+#+BEGIN_SRC scheme
+(whenever pattern
+          action)
+
+(whenever (and (unit-started ?x)
+               (provides ?x ?some-functionality))
+          (start-using ?some-functionality))
+#+END_SRC
+
+Mechanizm taki pozwala korzystać ze zdobytej wiedzy w sposób *proaktywny* - zdefiniowane reguły zostają uruchomione (wykonane zostają związane z nimi akcje) w momencie zaistnienia odpowiedniej sytuacji - w momencie dodania do bazy wszystkich faktów wymaganych do spełnienia lewej strony reguły.
+
+#+LaTeX: \noindent
+Nie jest jednak możliwe korzystanie ze zgromadzonej wiedzy w sposób *reaktywny* - nie można tworzyć dowolnych zapytań do bazy faktów - utrudniając implementację wielu pożądanych mechanizmów, takich jak odkrywanie usług (*service discovery*), czy dopasowywanie usług (*service matching*).
+
+W związku z powyższym, niemożliwe jest zrealizowanie trzeciego punktu przytoczonego w poprzedniej sekcji przypadku użycia dotyczącego odkrywania wiedzy o strukturze systemu przez nowo-wystartowaną jednostkę - ponieważ fakty tworzone przy startowaniu jednostek =basic-gps= oraz =vendor-gps= zostały już przetworzone prez mechanizm, nowo-wystartowana jednostka nie ma możliwości ponownego ich odkrycia i wykorzystania do własnych celów.
+
+Problemem do rozwiązania jest zatem *umożliwienie refleksji nad bazą powiązanych ze sobą faktów w sposób wydajny i wygodny w użytkowaniu* - na przykład wykorzystując język zapytań podobny do języków zapytań relacyjnych baz danych z rodziny SQL - przy jednoczesnym zachowaniu kompatybilności z mechanizmem obsługi zdarzeń i uzupełnieniu jego funkcjonalności o dodatkowe operacje na bazie faktów.
 
 ** Podobne rozwiązania
 - Przegląd obecnych metod SOA - statyczne formaty definicji usług, brak elastyczności w odkrywaniu usług,
