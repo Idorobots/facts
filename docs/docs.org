@@ -152,9 +152,18 @@ W związku z powyższym, niemożliwe jest zrealizowanie trzeciego punktu przytoc
 
 Problemem do rozwiązania jest zatem *umożliwienie refleksji nad bazą powiązanych ze sobą faktów w sposób wydajny i wygodny w użytkowaniu* - na przykład wykorzystując język zapytań podobny do języków zapytań relacyjnych baz danych z rodziny SQL - przy jednoczesnym zachowaniu kompatybilności z mechanizmem obsługi zdarzeń i uzupełnieniu jego funkcjonalności o dodatkowe operacje na bazie faktów.
 
-** Podobne rozwiązania
-- Przegląd obecnych metod SOA - statyczne formaty definicji usług, brak elastyczności w odkrywaniu usług,
-- Call by Meaning - nieadekwatna wydajność.
+** Sposoby rozwiązania problemu
+Ponieważ głównym przypadkiem użycia wykorzystującym bazę faktów w opisany w poprzedniej sekcji sposób jest odkrywanie istniejących usług (*service discovery*) oraz wybór najbardziej pasującej usługi (*service matching*), najłatwiejszym i zarazem najbardziej logicznym wyborem jest wykorzystanie istniejących i sprawdzonych protokołów oraz formatów umożliwiających odkrywanie usług.
+
+Rozwiązanie takie jest efektywne, lecz mało elastyczne - poza odkrywaniem i dopasowywaniem usług nie umożliwia implementacji innych potencjalnie przydatnych mechanizmów. Dodatkowo, najczęściej stosowane protokoły SD przeważnie są bardzo rozbudowane i obejmują wiele aspektów aplikacji biznesowych, a co za tym idzie nie stanowią prostej, ortogonalnej funkcjonalności języka programowania.
+
+Innym podejściem jest wykorzystanie bazy faktów w niezmienionej postaci oraz mechanizmu wnioskującego ją wykorzystującego. Mechanizm taki został wykorzystany w eksperymentalnym języku Novä opisanym szczegółowo w /Call by Meaning/, gdzie posłużono się bazą wiedzy użytkowej (*common sense knowledge*) Cyc. Programy w języku Novä wymagają dodania semantycznych adnotacji opisujących ich strukturę oraz działanie, natomiast Cyc wykorzystywany jest do poznawania wzajemnych zależności między poszczególnymi usługami oraz ich dopasowywania.
+
+Rozwiązanie to jest bardzo elastyczne, ale wymaga długich opisów semantycznych poszczególnych elementów programu. Dodatkowo wykorzystywanie olbrzymiej bazy wiedzy użytkowej przy każdej próbie skorzystania z wiedzy o samym programie skutkuje znaczącą degradacją wydajności.
+
+Podejściem pośrednim, pozwalającym osiągnąć zadowalającą wydajność przy dużej ekspresywności i elastyczności jest wykorzystanie wyspecjalizowanej ontologii obejmującej system modułowy języka oraz bazy faktów *triple store* pozwalającej konstruować zapytania w języku SPARQL.
+
+Rozwiązanie takie umożliwi implementację wielu pożądanych mechanizmów i jednocześnie pozostanie ortogonalne do pozostałych funkcjonalności projektowanego języka. Zostało ono opisane w następnej sekcji.
 
 * Szkic rozwiązania
 ** Porównanie różnych podejść
