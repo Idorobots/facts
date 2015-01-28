@@ -166,13 +166,51 @@ Podejściem pośrednim, pozwalającym osiągnąć zadowalającą wydajność prz
 Rozwiązanie takie umożliwi implementację wielu pożądanych mechanizmów i jednocześnie pozostanie ortogonalne do pozostałych funkcjonalności projektowanego języka. Zostało ono opisane w następnej sekcji.
 
 * Szkic rozwiązania
-** Porównanie różnych podejść
-- Predefiniowane formaty opisu usług (np. WSDL)
-- Systemy Regułowe - problem późnego startu/restartu usług
-- Ontologie/bazy faktów
-** Podejście semantyczne
-- Wstępny plan ontologii
-- Lista pojęć i zależności między nimi
+Podejście ontologiczne wymaga uprzedniego zidentyfikowania klas obiektów w niej występujących oraz relacji w jakich się one znajdują. Ponieważ opisany w poprzednich sekcjach system modułowy jest w dużej mierze prostą taksonomią, wstępna identyfikacja klas została podsumowana na poniższym diagramie:
+
+#+BEGIN_CENTER
+#+attr_latex: :width 0.8\textwidth
+[[file:./img/msoclass.pdf]]
+#+END_CENTER
+
+#+LaTeX: \noindent
+Natomiast wymagane pojęcia zaprezentowano poniżej:
+
+#+BEGIN_CENTER
+#+attr_latex: :width 0.8\textwidth
+[[file:./img/msoprop.pdf]]
+#+END_CENTER
+
+Zidentyfikowanym klasom przypisano następujące semantyczne definicje i najważniejsze atrybuty (zapisane w nawiasie po nazwie klasy):
+
+- *Node (id)* - węzeł, na którym działa (*runs*) =n= procesów (*Process*) i jednostek (*Unit*),
+- *Function (name)* - definicja funkcji,
+- *Process (id)* - process, który wykonuje można identyfikować na podstawie *process id*,
+- *Unit* - specjalna klasa, która jednocześnie jest procesem (*Process*) oraz modułem (*Module*),
+- *Module* - moduł, który może definiować (*defines*) pewne funkcje (*Function*), zależeć od (*requires*) protokołów (*Protocol*) lub innych modułów (*Module*) oraz dostarczać (*provides*) pewną funkcjonalność (*Protocol*),
+- *Protocol* - protokół, który deklaruje (*declares*) =n= funkcji (*Function*),
+- *UnitProtocol* - wyróżniony protokół (instancja klasy *Protocol*) dostarczająca wbudowanego w język interfejsu jednostek (*Unit*).
+
+#+LaTeX: \noindent
+Natomiast relacjom:
+
+- *Node runs Process* - działanie procesu na danym węźle,
+- *Protocol declares Function* - przynależność funkcji do danego protokołu,
+- *Module defines Function* - istnienie implementacji funkcji w pewnym module,
+- *Module requires Protocol or Module* - wzajemna zależność pomiędzy modułami w systemie,
+- *Module provides Protocol* - dostarczanie pewnej funkcjonalności przez moduł.
+
+Na poniższym diagramie przedstawiono kilka przykładowych instancji powyższych klas wraz z ich wzajemnymi relacjami na podstawie przykładu z poprzedniej sekcji:
+
+#+BEGIN_CENTER
+#+attr_latex: :width 0.8\textwidth
+[[file:./img/msoexample.pdf]]
+#+END_CENTER
+
+** Scenariusze wykorzystania ontologii
+- Lista jednostek na danych węzłach
+- Jednostka dostarczająca GPS o najniższej tolerancji błędu
+- Dodanie nowej klasy i inferencja istniejących pojęć do niej pasujących
 
 * Prototyp rozwiązania
 [[https://github.com/Idorobots/facts][Link do repozytorium na GitHub.]]
