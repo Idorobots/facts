@@ -208,9 +208,13 @@ Na poniższym diagramie przedstawiono kilka przykładowych instancji powyższych
 #+END_CENTER
 
 ** Scenariusze wykorzystania ontologii
-- Lista jednostek na danych węzłach
-- Jednostka dostarczająca GPS o najniższej tolerancji błędu
-- Dodanie nowej klasy i inferencja istniejących pojęć do niej pasujących
+W celu weryfikacji ontologii zaproponowano trzy scenariusze jej wykorzystania (wymienione poniżej). Każdy scenariusz zostanie wykonany na przykładowej bazie wiedzy zbudowanej z przykładowych instancji klas ontologii.
+
+- *Lista jednostek na danych węzłach* - scenariusz polega na odkryciu przez nowo-wystartowaną jednostkę listy innych jednostek, które są dostępne na poszczególnych węzłach klastra,
+
+- *Jednostka dostarczająca GPS o najniższej tolerancji błędu* - scenariusz polega na dopasowaniu dwóch usług bazując jedynie na ich wzajemnej zależności oraz atrybutach,
+
+- *Dodanie klasy Server* - scenariusz polega na odkryciu wszystkich jednostek, które można dopasować do wygenerowanej podczas działania aplikacji (na przykład programatycznie na podstawie interfejsu) klasy reprezentującej serwer jedynie na podstawie funkcji, które definiują; jednostki nie powinny zostać zmodyfikowane (na przykład poprzez dodanie protokołu, który dostarczają).
 
 * Prototyp rozwiązania
 [[https://github.com/Idorobots/facts][Link do repozytorium na GitHub.]]
