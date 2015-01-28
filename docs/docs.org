@@ -188,3 +188,5 @@ Rozwiązanie takie umożliwi implementację wielu pożądanych mechanizmów i je
 
 * Bibliografia
 - Hesam Samimi, Chris Deaton, Yoshiki Ohshima, Alessandro Warth, and Todd Millstein, /Call by Meaning/, In Proceedings of the 2014 ACM International Symposium on New Ideas, New Paradigms, and Reflections on Programming & Software (Onward! 2014), ACM, New York, NY, USA, 11-28, http://doi.acm.org/10.1145/2661136.266115
+
+- Douglas Foxvog, /Cyc/, In Theory and Applications of Ontology: Computer Applications, Springer, 2010.
