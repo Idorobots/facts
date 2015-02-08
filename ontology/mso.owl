@@ -1,0 +1,588 @@
+<?xml version="1.0"?>
+
+
+<!DOCTYPE rdf:RDF [
+    <!ENTITY owl "http://www.w3.org/2002/07/owl#" >
+    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
+    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+]>
+
+
+<rdf:RDF xmlns="http://www.idorobots.org/mso#"
+     xml:base="http://www.idorobots.org/mso"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+    <owl:Ontology rdf:about="http://www.idorobots.org/mso"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.idorobots.org/mso#declares -->
+
+    <owl:ObjectProperty rdf:about="http://www.idorobots.org/mso#declares">
+        <rdfs:range rdf:resource="http://www.idorobots.org/mso#Function"/>
+        <rdfs:domain rdf:resource="http://www.idorobots.org/mso#Protocol"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.idorobots.org/mso#defines -->
+
+    <owl:ObjectProperty rdf:about="http://www.idorobots.org/mso#defines">
+        <rdfs:range rdf:resource="http://www.idorobots.org/mso#Function"/>
+        <rdfs:domain rdf:resource="http://www.idorobots.org/mso#Module"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.idorobots.org/mso#executes -->
+
+    <owl:ObjectProperty rdf:about="http://www.idorobots.org/mso#executes">
+        <rdfs:range rdf:resource="http://www.idorobots.org/mso#Function"/>
+        <rdfs:domain rdf:resource="http://www.idorobots.org/mso#Process"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.idorobots.org/mso#provides -->
+
+    <owl:ObjectProperty rdf:about="http://www.idorobots.org/mso#provides">
+        <rdfs:domain rdf:resource="http://www.idorobots.org/mso#Module"/>
+        <rdfs:range rdf:resource="http://www.idorobots.org/mso#Protocol"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.idorobots.org/mso#requires -->
+
+    <owl:ObjectProperty rdf:about="http://www.idorobots.org/mso#requires">
+        <rdfs:domain rdf:resource="http://www.idorobots.org/mso#Module"/>
+        <rdfs:range>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.idorobots.org/mso#Module"/>
+                    <rdf:Description rdf:about="http://www.idorobots.org/mso#Protocol"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:range>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.idorobots.org/mso#runs -->
+
+    <owl:ObjectProperty rdf:about="http://www.idorobots.org/mso#runs">
+        <rdfs:domain rdf:resource="http://www.idorobots.org/mso#Node"/>
+        <rdfs:range rdf:resource="http://www.idorobots.org/mso#Process"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.idorobots.org/mso#precision -->
+
+    <owl:DatatypeProperty rdf:about="http://www.idorobots.org/mso#precision"/>
+    
+
+
+    <!-- http://www.idorobots.org/mso#runningTime -->
+
+    <owl:DatatypeProperty rdf:about="http://www.idorobots.org/mso#runningTime"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.idorobots.org/mso#ComputeStatsFunction -->
+
+    <owl:Class rdf:about="http://www.idorobots.org/mso#ComputeStatsFunction">
+        <rdfs:subClassOf rdf:resource="http://www.idorobots.org/mso#Function"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.idorobots.org/mso#runningTime"/>
+                <owl:someValuesFrom rdf:resource="&xsd;int"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:comment>Computes various stats using temperature &amp; time data.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.idorobots.org/mso#Function -->
+
+    <owl:Class rdf:about="http://www.idorobots.org/mso#Function"/>
+    
+
+
+    <!-- http://www.idorobots.org/mso#GetTempFunction -->
+
+    <owl:Class rdf:about="http://www.idorobots.org/mso#GetTempFunction">
+        <rdfs:subClassOf rdf:resource="http://www.idorobots.org/mso#Function"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.idorobots.org/mso#GetTimeFunction -->
+
+    <owl:Class rdf:about="http://www.idorobots.org/mso#GetTimeFunction">
+        <rdfs:subClassOf rdf:resource="http://www.idorobots.org/mso#Function"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.idorobots.org/mso#precision"/>
+                <owl:someValuesFrom rdf:resource="&xsd;float"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:comment>Used to get current time.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.idorobots.org/mso#LoopFunction -->
+
+    <owl:Class rdf:about="http://www.idorobots.org/mso#LoopFunction">
+        <rdfs:subClassOf rdf:resource="http://www.idorobots.org/mso#Function"/>
+        <rdfs:comment>Executes the life-time of a unit.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.idorobots.org/mso#Module -->
+
+    <owl:Class rdf:about="http://www.idorobots.org/mso#Module">
+        <rdfs:subClassOf>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.idorobots.org/mso#defines"/>
+                        <owl:someValuesFrom rdf:resource="http://www.idorobots.org/mso#Function"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.idorobots.org/mso#provides"/>
+                        <owl:someValuesFrom rdf:resource="http://www.idorobots.org/mso#Protocol"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.idorobots.org/mso#Node -->
+
+    <owl:Class rdf:about="http://www.idorobots.org/mso#Node">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.idorobots.org/mso#runs"/>
+                <owl:someValuesFrom rdf:resource="http://www.idorobots.org/mso#Process"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.idorobots.org/mso#OtherTempProtocol -->
+
+    <owl:Class rdf:about="http://www.idorobots.org/mso#OtherTempProtocol">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.idorobots.org/mso#Protocol"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.idorobots.org/mso#declares"/>
+                        <owl:onClass rdf:resource="http://www.idorobots.org/mso#GetTempFunction"/>
+                        <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+    </owl:Class>
+    
+
+
+    <!-- http://www.idorobots.org/mso#OtherTempUnit -->
+
+    <owl:Class rdf:about="http://www.idorobots.org/mso#OtherTempUnit">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.idorobots.org/mso#provides"/>
+                        <owl:someValuesFrom rdf:resource="http://www.idorobots.org/mso#OtherTempProtocol"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.idorobots.org/mso#provides"/>
+                        <owl:someValuesFrom rdf:resource="http://www.idorobots.org/mso#UnitProtocol"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.idorobots.org/mso#defines"/>
+                        <owl:onClass rdf:resource="http://www.idorobots.org/mso#GetTempFunction"/>
+                        <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.idorobots.org/mso#defines"/>
+                        <owl:onClass rdf:resource="http://www.idorobots.org/mso#LoopFunction"/>
+                        <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.idorobots.org/mso#defines"/>
+                        <owl:onClass rdf:resource="http://www.idorobots.org/mso#StartFunction"/>
+                        <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.idorobots.org/mso#defines"/>
+                        <owl:onClass rdf:resource="http://www.idorobots.org/mso#StopFunction"/>
+                        <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.idorobots.org/mso#executes"/>
+                <owl:someValuesFrom rdf:resource="http://www.idorobots.org/mso#Function"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.idorobots.org/mso#Process -->
+
+    <owl:Class rdf:about="http://www.idorobots.org/mso#Process">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.idorobots.org/mso#executes"/>
+                <owl:someValuesFrom rdf:resource="http://www.idorobots.org/mso#Function"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.idorobots.org/mso#Protocol -->
+
+    <owl:Class rdf:about="http://www.idorobots.org/mso#Protocol">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.idorobots.org/mso#declares"/>
+                <owl:someValuesFrom rdf:resource="http://www.idorobots.org/mso#Function"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.idorobots.org/mso#StartFunction -->
+
+    <owl:Class rdf:about="http://www.idorobots.org/mso#StartFunction">
+        <rdfs:subClassOf rdf:resource="http://www.idorobots.org/mso#Function"/>
+        <rdfs:comment>Performs neccessary tear down of a Unit&apos;s state.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.idorobots.org/mso#StatsModule -->
+
+    <owl:Class rdf:about="http://www.idorobots.org/mso#StatsModule">
+        <owl:equivalentClass>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.idorobots.org/mso#defines"/>
+                <owl:onClass rdf:resource="http://www.idorobots.org/mso#ComputeStatsFunction"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+            </owl:Restriction>
+        </owl:equivalentClass>
+    </owl:Class>
+    
+
+
+    <!-- http://www.idorobots.org/mso#StatsProtocol -->
+
+    <owl:Class rdf:about="http://www.idorobots.org/mso#StatsProtocol">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.idorobots.org/mso#Protocol"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.idorobots.org/mso#declares"/>
+                        <owl:onClass rdf:resource="http://www.idorobots.org/mso#ComputeStatsFunction"/>
+                        <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+    </owl:Class>
+    
+
+
+    <!-- http://www.idorobots.org/mso#StopFunction -->
+
+    <owl:Class rdf:about="http://www.idorobots.org/mso#StopFunction">
+        <rdfs:subClassOf rdf:resource="http://www.idorobots.org/mso#Function"/>
+        <rdfs:comment>Used to start a Unit.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.idorobots.org/mso#TempProtocol -->
+
+    <owl:Class rdf:about="http://www.idorobots.org/mso#TempProtocol">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.idorobots.org/mso#Protocol"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.idorobots.org/mso#declares"/>
+                        <owl:onClass rdf:resource="http://www.idorobots.org/mso#GetTempFunction"/>
+                        <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+    </owl:Class>
+    
+
+
+    <!-- http://www.idorobots.org/mso#TempUnit -->
+
+    <owl:Class rdf:about="http://www.idorobots.org/mso#TempUnit">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.idorobots.org/mso#provides"/>
+                        <owl:someValuesFrom rdf:resource="http://www.idorobots.org/mso#TempProtocol"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.idorobots.org/mso#provides"/>
+                        <owl:someValuesFrom rdf:resource="http://www.idorobots.org/mso#UnitProtocol"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.idorobots.org/mso#defines"/>
+                        <owl:onClass rdf:resource="http://www.idorobots.org/mso#GetTempFunction"/>
+                        <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.idorobots.org/mso#defines"/>
+                        <owl:onClass rdf:resource="http://www.idorobots.org/mso#LoopFunction"/>
+                        <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.idorobots.org/mso#defines"/>
+                        <owl:onClass rdf:resource="http://www.idorobots.org/mso#StartFunction"/>
+                        <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.idorobots.org/mso#defines"/>
+                        <owl:onClass rdf:resource="http://www.idorobots.org/mso#StopFunction"/>
+                        <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.idorobots.org/mso#executes"/>
+                <owl:someValuesFrom rdf:resource="http://www.idorobots.org/mso#Function"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.idorobots.org/mso#TimerProtocol -->
+
+    <owl:Class rdf:about="http://www.idorobots.org/mso#TimerProtocol">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.idorobots.org/mso#Protocol"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.idorobots.org/mso#declares"/>
+                        <owl:onClass rdf:resource="http://www.idorobots.org/mso#GetTimeFunction"/>
+                        <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+    </owl:Class>
+    
+
+
+    <!-- http://www.idorobots.org/mso#TimerUnit -->
+
+    <owl:Class rdf:about="http://www.idorobots.org/mso#TimerUnit">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.idorobots.org/mso#provides"/>
+                        <owl:someValuesFrom rdf:resource="http://www.idorobots.org/mso#TimerProtocol"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.idorobots.org/mso#provides"/>
+                        <owl:someValuesFrom rdf:resource="http://www.idorobots.org/mso#UnitProtocol"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.idorobots.org/mso#defines"/>
+                        <owl:onClass rdf:resource="http://www.idorobots.org/mso#GetTimeFunction"/>
+                        <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.idorobots.org/mso#defines"/>
+                        <owl:onClass rdf:resource="http://www.idorobots.org/mso#LoopFunction"/>
+                        <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.idorobots.org/mso#defines"/>
+                        <owl:onClass rdf:resource="http://www.idorobots.org/mso#StartFunction"/>
+                        <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.idorobots.org/mso#defines"/>
+                        <owl:onClass rdf:resource="http://www.idorobots.org/mso#StopFunction"/>
+                        <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.idorobots.org/mso#executes"/>
+                <owl:someValuesFrom rdf:resource="http://www.idorobots.org/mso#Function"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.idorobots.org/mso#Unit -->
+
+    <owl:Class rdf:about="http://www.idorobots.org/mso#Unit">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.idorobots.org/mso#executes"/>
+                        <owl:someValuesFrom rdf:resource="http://www.idorobots.org/mso#Function"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.idorobots.org/mso#provides"/>
+                        <owl:someValuesFrom rdf:resource="http://www.idorobots.org/mso#UnitProtocol"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.idorobots.org/mso#defines"/>
+                        <owl:onClass rdf:resource="http://www.idorobots.org/mso#LoopFunction"/>
+                        <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.idorobots.org/mso#defines"/>
+                        <owl:onClass rdf:resource="http://www.idorobots.org/mso#StartFunction"/>
+                        <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.idorobots.org/mso#defines"/>
+                        <owl:onClass rdf:resource="http://www.idorobots.org/mso#StopFunction"/>
+                        <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+    </owl:Class>
+    
+
+
+    <!-- http://www.idorobots.org/mso#UnitProtocol -->
+
+    <owl:Class rdf:about="http://www.idorobots.org/mso#UnitProtocol">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.idorobots.org/mso#Protocol"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.idorobots.org/mso#declares"/>
+                        <owl:onClass rdf:resource="http://www.idorobots.org/mso#LoopFunction"/>
+                        <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.idorobots.org/mso#declares"/>
+                        <owl:onClass rdf:resource="http://www.idorobots.org/mso#StartFunction"/>
+                        <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.idorobots.org/mso#declares"/>
+                        <owl:onClass rdf:resource="http://www.idorobots.org/mso#StopFunction"/>
+                        <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+    </owl:Class>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // General axioms
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDisjointClasses"/>
+        <owl:members rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://www.idorobots.org/mso#Function"/>
+            <rdf:Description rdf:about="http://www.idorobots.org/mso#Node"/>
+            <rdf:Description rdf:about="http://www.idorobots.org/mso#Process"/>
+            <rdf:Description rdf:about="http://www.idorobots.org/mso#Protocol"/>
+        </owl:members>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDisjointClasses"/>
+        <owl:members rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://www.idorobots.org/mso#ComputeStatsFunction"/>
+            <rdf:Description rdf:about="http://www.idorobots.org/mso#GetTempFunction"/>
+            <rdf:Description rdf:about="http://www.idorobots.org/mso#GetTimeFunction"/>
+            <rdf:Description rdf:about="http://www.idorobots.org/mso#LoopFunction"/>
+            <rdf:Description rdf:about="http://www.idorobots.org/mso#StartFunction"/>
+            <rdf:Description rdf:about="http://www.idorobots.org/mso#StopFunction"/>
+        </owl:members>
+    </rdf:Description>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 3.4.2) http://owlapi.sourceforge.net -->
+
