@@ -217,7 +217,136 @@ W celu weryfikacji ontologii zaproponowano trzy scenariusze jej wykorzystania (w
 - *Dodanie klasy Server* - scenariusz polega na odkryciu wszystkich jednostek, które można dopasować do wygenerowanej podczas działania aplikacji (na przykład programatycznie na podstawie interfejsu) klasy reprezentującej serwer jedynie na podstawie funkcji, które definiują; jednostki nie powinny zostać zmodyfikowane (na przykład poprzez dodanie protokołu, który dostarczają).
 
 * Prototyp rozwiązania
-[[https://github.com/Idorobots/facts][Link do repozytorium na GitHub.]]
+Ponieważ opisana w poprzedniej sekcji i [[https://github.com/Idorobots/facts][udostępniona w internecie ontologia]] jest bardzo prosta, została ona wzbogacona o dodatkowe klasy pojęć oraz ich instancje stworzone na podstawie przykładowego kodu aplikacji, napisanej w projektowanym języku programowania.
+
+Celem aplikacji jest automatyczne zbieranie danych o temperaturze w różnych miejscach klastra oraz obliczanie statystyk na podstawie zdobytych danych. Aplikacja jest rozproszona i działa na trzech węzłach, z których każdy uruchamia kilka jednostek i dostarcza kilku modułów:
+
+- *smartphone*, uruchamiający =basic-timer= oraz dostarczający =basic-stats=:
+
+#+BEGIN_SRC scheme
+(define-protocol timer
+  (declare (get-time)))
+
+(define-protocol (stats)
+  (declare (compute-stats time-series temp-vals)))
+#+END_SRC
+
+#+BEGIN_SRC scheme
+(define-module (basic-timer)
+  (provide 'protocols.timer)
+  (provide 'unit)
+
+  (define (get-time)
+    ;; Get unprecise time...
+    )
+
+  (define (start type)
+    ;; ...
+    )
+
+  (define (loop state)
+    ;; Dispatch requests, return current wall-clock time, repeat.
+    )
+
+  (define (stop reason)
+    ;; ...
+    ))
+
+(define-module (basic-stats)
+  (provide 'protocols.stats)
+
+  (define (compute-stats time-series temp-vals)
+    ;; Slowly compute stats...
+    ))
+#+END_SRC
+
+- *raspberry pi*, uruchamiająca =RTC-timer= oraz =DS18B20-temp=:
+
+#+BEGIN_SRC scheme
+(define-protocol temp
+  (declare (get-temp)))
+
+(define-module (DS18B20-temp)
+  (provide 'temp)
+  (provide 'unit)
+
+  (define (get-temp)
+    ;; Get wacky temp using DHT11 sensor...
+    )
+
+  (define (start type)
+    ;; Initialize DS18B20...
+    )
+
+  (define (loop state)
+    ;; Start temp conversion, read temp, repeat...
+    )
+
+  (define (stop reason)
+    ;; ...
+    ))
+
+(define-module (RTC-timer)
+  (provide 'protocols.timer)
+  (provide 'unit)
+
+  (define (get-time)
+    ;; Get RTC time...
+    )
+
+  (define (start type)
+    ;; Initialize the RTC...
+    )
+
+  (define (loop state)
+    ;; Dispatch requests, return RTC time, repeat...
+    )
+
+  (define (stop reason)
+    ;; ...
+    ))
+#+END_SRC
+
+- *parallella*, uruchamiająca =DHT11-temp= oraz dostarczająca =fast-stats=:
+
+#+BEGIN_SRC scheme
+(define-protocol other-temp
+  (declare (get-temp)))
+
+(define-module (DHT11-temp)
+  (provide 'other-temp)
+  (provide 'unit)
+
+  (define (get-temp)
+    ;; Get wacky temp using DHT11 sensor...
+    )
+
+  (define (start type)
+    ;; Initialize DHT11...
+    )
+
+  (define (loop state)
+    ;; Dispatch requests, read humidity & temp, return temp, repeat...
+    )
+
+  (define (stop reason)
+    ;; ...
+    ))
+
+(define-module (fast-stats)
+  (provide 'protocols.stats)
+
+  (define (compute-stats time-series temp-vals)
+    ;; Compute stats faster...
+    ))
+#+END_SRC
+
+Schemat architektury przykładowej aplikacji został zawarty na poniższym diagramie:
+
+#+BEGIN_CENTER
+#+attr_latex: :width 0.4\textwidth
+[[file:./img/exampleapp.pdf]]
+#+END_CENTER
 
 ** Ontologia Systemu Modułowego
 
