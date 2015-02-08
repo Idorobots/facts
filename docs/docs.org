@@ -476,9 +476,22 @@ Wynik:
 | BasicTimer | GetBasicTime | 25         |
 |------------+--------------+------------|
 
-
 * Analiza proponowanego rozwiązania
 ** Wnioski
+- Do najważniejszych wniosków płynących z projektu należy fakt, iż ontologie stanowią ciekawe narzędzie inżynierii wiedzy, które można z powodzeniem wykorzystać w implementacji języków programowania jako ich integralną część.
+
+- Wykorzystanie ontologii umożliwia implementację odkrywania i dopasowywania usług za pomocą zapytań do bazy inferowanej wiedzy - programista zostaje zwolniony z zawierania "oczywistych" faktów w kodzie aplikacji.
+
+- Mechanizm wnioskujący dostępny w narzędziach przetwarzających ontologie umożliwia łatwe rozwijanie i hierarchizowanie wiedzy o strukturze aplikacji, a język zapytań SPARQL dodatkowo pozwala tworzyć ustrukturyzowane zapytania, których wynik jest przystępny do dalszego przetwarzania.
+
+- Wadą ontologii jest wykorzystywanie *trójek* lub *czwórek* do reprezentacji faktów. Wymusza to ograniczenie reprezentacji wiedzy istniejącego już w projektowanym języku programowania mechanizmu obsługi zdarzeń bazującego na systemach regułowych.
+
+- Kolejną wadą wykorzystania ontologii jest znaczna ilość dodatkowych faktów, które istnieją w bazie a pochodzą z licznych innych ontologii, z których MSO korzysta.
+
+** Potencjalne kierunki rozwoju
+- Dodanie większej ilości rozróżniających atrybutów do podklas klasy =Function=, co umożliwi lepsze dopasowywanie usług.
+- Dodanie klas relacji czasowych oraz przestrzennych do węzłów w celu umożliwienia kontroli *Quality of Service*.
+- Dodanie podklas klasy =Node= reprezentujących specjalne- i pseudo-węzły do różnych zastosowań.
 
 * Bibliografia
 - Hesam Samimi, Chris Deaton, Yoshiki Ohshima, Alessandro Warth, and Todd Millstein, /Call by Meaning/, In Proceedings of the 2014 ACM International Symposium on New Ideas, New Paradigms, and Reflections on Programming & Software (Onward! 2014), ACM, New York, NY, USA, 11-28, http://doi.acm.org/10.1145/2661136.266115
