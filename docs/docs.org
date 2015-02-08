@@ -347,11 +347,72 @@ Należy zauważyć, iż =DHT11-temp= działające na węźle *parallella* oraz =
 Schemat architektury przykładowej aplikacji został zawarty na poniższym diagramie:
 
 #+BEGIN_CENTER
-#+attr_latex: :width 0.4\textwidth
+#+attr_latex: :width 0.5\textwidth
 [[file:./img/exampleapp.pdf]]
 #+END_CENTER
 
 ** Ontologia Systemu Modułowego
+Ontologia została stworzona z wykorzystaniem programu [[http://protege.stanford.edu/][Protégé]]. Poniższy diagram prezentuje strukturę klas ontologii po wnioskowaniu:
+
+#+BEGIN_CENTER
+#+attr_latex: :width 0.8\textwidth
+[[file:./img/ontology.png]]
+#+END_CENTER
+
+Ontologia udostępnia poniższe klasy. Poza klasami zidentyfikowanymi i opisanymi w poprzednich sekcjach, zawarto w niej także klasy niezbędne do reprezentacji modułów przykładowej aplikacji:
+
+#+BEGIN_CENTER
+#+attr_latex: :width 0.35\textwidth
+[[file:./img/classes.png]]
+#+END_CENTER
+
+#+LaTeX: \noindent
+Należy zwrócić uwagę, iż reprezentacja modułów przez klasy w ontologii, nie zaś instancje klasy =Module=, jest uzasadniona możliwością istnienia wielu wersji tego samego moduły na wielu węzłach. W takim przypadku każda wersja reprezentowana jest przez osobną instancję klasy w ontologii.
+
+Mechanizm wnioskujący dostępny w Protégé pozwala na automatyczną inferencję wzajemnych zależności klas na podstawie ich ograniczeń. Jest to bardzo wygodny i pomocny mechanizm, który ma duży potencjał zastosowania w systemie modułowym języka programowania:
+
+#+BEGIN_CENTER
+#+attr_latex: :width 0.45\textwidth
+[[file:./img/inferedclasses.png]]
+#+END_CENTER
+
+#+LaTeX: \noindent
+Pozwala on na "unormowanie" klas - automatycznie wykrywana jest ich hierarchia oraz relacje =subClassOf=. Cieakwym jest także wykrywanie klas wzajemnie równoważnych (na przykład =TempProtocol= oraz =OtherTempProtocol=), co zostanie opisane szerzej w następnym punkcie.
+
+Konkretną reprezentację wiedzy o przykładowej aplikacji stanowią instancje klas:
+
+#+BEGIN_CENTER
+#+attr_latex: :width 0.25\textwidth
+[[file:./img/instances.png]]
+#+END_CENTER
+
+#+LaTeX: \noindent
+Reprezentują one poszczególne moduły oraz jednostki działające w danej chwili w aplikacji:
+
+#+BEGIN_CENTER
+#+attr_latex: :width 0.35\textwidth
+[[file:./img/instancesbytype.png]]
+#+END_CENTER
+
+Klasy pojęć w ontologii powiązane są następującymi relacjami:
+
+#+BEGIN_CENTER
+#+attr_latex: :width 0.3\textwidth
+[[file:./img/objectproperties.png]]
+#+END_CENTER
+
+#+LaTeX: \noindent
+Relacje te w większości zostały opisane w poprzednich sekcjach, jednak koniecznym okazało się dodanie relacji =executes=, która wiąże procesy z funkcjami. Umożliwiło to powiązanie klass =Unit= oraz =Process= - są to klasy reprezuntujące ciągłość obliczeń w systemie - oraz ułatwiło tworzenie ontologii.
+
+Poza relacjami między klasami, zdefiniowane także kilka atrybutów klas:
+
+#+BEGIN_CENTER
+#+attr_latex: :width 0.3\textwidth
+[[file:./img/dataproperties.png]]
+#+END_CENTER
+
+#+LaTeX: \noindent
+Atrybut =precision= określa precyzję czasu zwracanego przez funkcje z klasy =GetTimeFunction=, natomiast =runningTime= określa czas działania funkcji z klasy =ComputeStatsFunction=. Są to jedynie przykładowe atrybuty i istnieje możliwość dodania znacznie większej ich ilości.
 
 ** Przykłady wykorzystania ontologii
 - Automatyczna inferencja dostępnej klasy obiektów
