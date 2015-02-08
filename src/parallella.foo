@@ -1,0 +1,29 @@
+(define-protocol other-temp
+  (declare (get-temp)))
+
+(define-module (DHT11-temp)
+  (provide 'other-temp)
+  (provide 'unit)
+
+  (define (get-temp)
+    ;; Get wacky temp using DHT11 sensor...
+    )
+
+  (define (start type)
+    ;; Initialize DHT11...
+    )
+
+  (define (loop state)
+    ;; Dispatch requests, read humidity & temp, return temp, repeat...
+    )
+
+  (define (stop reason)
+    ;; ...
+    ))
+
+(define-module (fast-stats)
+  (provide 'protocols.stats)
+
+  (define (compute-stats time-series temp-vals)
+    ;; Compute stats faster...
+    ))

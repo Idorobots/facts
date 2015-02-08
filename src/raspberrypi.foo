@@ -1,0 +1,42 @@
+(define-protocol temp
+  (declare (get-temp)))
+
+(define-module (DS18B20-temp)
+  (provide 'temp)
+  (provide 'unit)
+
+  (define (get-temp)
+    ;; Get wacky temp using DHT11 sensor...
+    )
+
+  (define (start type)
+    ;; Initialize DS18B20...
+    )
+
+  (define (loop state)
+    ;; Start temp conversion, read temp, repeat...
+    )
+
+  (define (stop reason)
+    ;; ...
+    ))
+
+(define-module (RTC-timer)
+  (provide 'protocols.timer)
+  (provide 'unit)
+
+  (define (get-time)
+    ;; Get RTC time...
+    )
+
+  (define (start type)
+    ;; Initialize the RTC...
+    )
+
+  (define (loop state)
+    ;; Dispatch requests, return RTC time, repeat...
+    )
+
+  (define (stop reason)
+    ;; ...
+    ))

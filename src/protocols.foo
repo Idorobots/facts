@@ -1,0 +1,5 @@
+(define-protocol timer
+  (declare (get-time)))
+
+(define-protocol (stats)
+  (declare (compute-stats time-series temp-vals)))

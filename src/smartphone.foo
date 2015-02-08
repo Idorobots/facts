@@ -1,0 +1,26 @@
+(define-module (basic-timer)
+  (provide 'protocols.timer)
+  (provide 'unit)
+
+  (define (get-time)
+    ;; Get unprecise time...
+    )
+
+  (define (start type)
+    ;; ...
+    )
+
+  (define (loop state)
+    ;; Dispatch requests, return current wall-clock time, repeat.
+    )
+
+  (define (stop reason)
+    ;; ...
+    ))
+
+(define-module (basic-stats)
+  (provide 'protocols.stats)
+
+  (define (compute-stats time-series temp-vals)
+    ;; Slowly compute stats...
+    ))
