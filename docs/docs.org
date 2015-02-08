@@ -415,8 +415,67 @@ Poza relacjami między klasami, zdefiniowane także kilka atrybutów klas:
 Atrybut =precision= określa precyzję czasu zwracanego przez funkcje z klasy =GetTimeFunction=, natomiast =runningTime= określa czas działania funkcji z klasy =ComputeStatsFunction=. Są to jedynie przykładowe atrybuty i istnieje możliwość dodania znacznie większej ich ilości.
 
 ** Przykłady wykorzystania ontologii
-- Automatyczna inferencja dostępnej klasy obiektów
-- Zapytania SPARQL
+- Najciekawszym przykładem wykorzystania ontologii jest *automatyczna inferencja ekwiwalentnych klas* na podstawie implementowanych interfejsów. Pozwala to na uwolnienie programistów oraz modułów języka programowania od statycznego określania dostarczanych protokołów i implementowanych interfejsów (na przykład =DHT11-temp= oraz =DS18B20-temp=). Zamiast tego, moduł definiujący pewien zbiór funkcji może zostać automatycznie dopasowany do odpowiednich protokołów i zostać wykorzystany przez inne moduły, wymagające implementacji owych protokołów. Programista zamiast definiować protokoły, które jego kod będzie udostępniał może definiować protokoły, których jego kod wymaga, a mechanizm wnioskowania automatycznie dopasuje odpowiednie moduły, które spełniają wymogi zdefiniowanych protokołów.
+
+- *Lista jednostek działających na danych węzłach* - pozwalające na wykrywanie dostępnych usług:
+
+Zapytanie SPARQL:
+
+#+BEGIN_SRC sql
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX mso: <http://www.idorobots.org/mso#>
+SELECT *
+WHERE { ?node mso:runs ?unit }
+ORDER BY ?node
+#+END_SRC
+
+Wynik:
+
+#+attr_latex: :align |l|l|
+|-------------+-------------|
+| ?node       | ?unit       |
+| /           | <>          |
+|-------------+-------------|
+| Parallella  | DHT11       |
+| RaspberryPi | DS18B20Temp |
+| RaspberryPi | RTCTimer    |
+| SmartPhone  | BasicTimer  |
+|-------------+-------------|
+
+- *Jednostka dostarczająca czas o najwyższej precyzji* - pozwalające na dopasowywanie usług:
+
+Zapytanie SPARQL:
+
+#+BEGIN_SRC sql
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX mso: <http://www.idorobots.org/mso#>
+SELECT *
+WHERE {
+    ?unit a mso:TimerUnit.
+    ?unit mso:defines ?function.
+    ?function a mso:GetTimeFunction.
+    ?function mso:precision ?precision
+}
+ORDER by ?precision
+#+END_SRC
+
+Wynik:
+
+#+attr_latex: :align |l|l|l|
+|------------+--------------+------------|
+| ?unit      | ?function    | ?precision |
+| /          | <>           | <>         |
+|------------+--------------+------------|
+| RTCTimer   | GetRTCTime   | 100        |
+| BasicTimer | GetBasicTime | 25         |
+|------------+--------------+------------|
+
 
 * Analiza proponowanego rozwiązania
 ** Wnioski
