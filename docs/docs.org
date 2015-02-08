@@ -341,6 +341,9 @@ Celem aplikacji jest automatyczne zbieranie danych o temperaturze w różnych mi
     ))
 #+END_SRC
 
+#+LaTeX: \noindent
+Należy zauważyć, iż =DHT11-temp= działające na węźle *parallella* oraz =DS18B20-temp= działające na węźle *raspberry pi* nie używają tego samego protokołu. Fakt ten zostanie wykorzystany w dalszej części analizy.
+
 Schemat architektury przykładowej aplikacji został zawarty na poniższym diagramie:
 
 #+BEGIN_CENTER
